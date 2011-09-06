@@ -45,6 +45,9 @@ class ConstantType(object):
     METHOD_REF = 10
     INTERFACE_METHOD_REF = 11
     NAME_AND_TYPE = 12
+    METHOD_HANDLE = 15
+    METHOD_TYPE = 16
+    INVOKE_DYNAMIC = 18
 
 
 class ConstantPool(list):
@@ -233,6 +236,43 @@ class ConstantNameAndType(ConstantBase):
         return NameAndType(self.name, self.descriptor)
 
 
+class ConstantMethodHandle(ConstantBase):
+    tag = ConstantType.METHOD_HANDLE
+
+    def __init__(self, parent):
+        ConstantBase.__init__(self, parent)
+        self.reference_kind, = self.read_data('>B')
+        self._reference_index, = self.read_data('>H')
+
+    @property
+    def reference(self):
+        return self.constant_pool.ref(self._reference_index)
+
+
+class ConstantMethodType(ConstantBase):
+    tag = ConstantType.METHOD_TYPE
+
+    def __init__(self, parent):
+        ConstantBase.__init__(self, parent)
+        self._descriptor_index, = self.read_data('>H')
+
+    @property
+    def descriptor(self):
+        return self.constant_pool.ref(self._descriptor_index, [ConstantType.UTF8])
+
+
+class ConstantInvokeDynamic(ConstantBase):
+    tag = ConstantType.INVOKE_DYNAMIC
+
+    def __init__(self, parent):
+        ConstantBase.__init__(self, parent)
+        self.bootstrap_method_attr_index, self._name_and_type_index = self.read_data('>HH')
+
+    @property
+    def name_and_type(self):
+        return self.constant_pool.ref(self._name_and_type_index, [ConstantType.NAME_AND_TYPE])
+
+
 _CONSTANT_TYPE = {
     ConstantType.DUMMY: (ConstantDummy, 'Dummy'),
     ConstantType.UTF8: (ConstantUTF8, 'UTF8'),
@@ -245,5 +285,8 @@ _CONSTANT_TYPE = {
     ConstantType.FIELD_REF: (ConstantFieldRef, 'FieldRef'),
     ConstantType.METHOD_REF: (ConstantMethodRef, 'MethodRef'),
     ConstantType.INTERFACE_METHOD_REF: (ConstantInterfaceMethodRef, 'InterfaceMethodRef'),
-    ConstantType.NAME_AND_TYPE: (ConstantNameAndType, 'NameAndType')
+    ConstantType.NAME_AND_TYPE: (ConstantNameAndType, 'NameAndType'),
+    ConstantType.METHOD_HANDLE: (ConstantMethodHandle, 'MethodHandle'),
+    ConstantType.METHOD_TYPE: (ConstantMethodType, 'MethodType'),
+    ConstantType.INVOKE_DYNAMIC: (ConstantInvokeDynamic, 'InvokeDynamic')
 }

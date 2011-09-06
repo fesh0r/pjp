@@ -18,6 +18,7 @@ from .attribute.attrib_annotations import AttributeRuntimeInvisibleAnnotations
 from .attribute.attrib_annotations import AttributeRuntimeVisibleParameterAnnotations
 from .attribute.attrib_annotations import AttributeRuntimeInvisibleParameterAnnotations
 from .attribute.attrib_annotations import AttributeAnnotationDefault
+from .attribute.attrib_bootstrapmethods import AttributeBootstrapMethods
 
 
 __all__ = ['AttributeTable']
@@ -65,4 +66,5 @@ _ATTRIBUTE_MAP = {
     'RuntimeVisibleParameterAnnotations': AttributeRuntimeVisibleParameterAnnotations,
     'RuntimeInvisibleParameterAnnotations': AttributeRuntimeInvisibleParameterAnnotations,
     'AnnotationDefault': AttributeAnnotationDefault,
+    'BootstrapMethods': AttributeBootstrapMethods
 }
