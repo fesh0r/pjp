@@ -8,17 +8,19 @@ _NAME_AND_SIGNATURE = namedtuple('NameAndSignature', ['name', 'descriptor'])
 _ENTRY_REF = namedtuple('EntryRef', ['class_', 'name_and_type'])
 
 
-class NameAndType(_NAME_AND_TYPE):  # pylint: disable-msg=W0232
+# pylint: disable-msg=W0232
+
+class NameAndType(_NAME_AND_TYPE):
     def __str__(self):
         return '%s:%s' % (self.name, self.descriptor)
 
 
-class NameAndSignature(_NAME_AND_SIGNATURE):  # pylint: disable-msg=W0232
+class NameAndSignature(_NAME_AND_SIGNATURE):
     def __str__(self):
         return '%s:%s' % (self.name, self.descriptor)
 
 
-class EntryRef(_ENTRY_REF):  # pylint: disable-msg=W0232
+class EntryRef(_ENTRY_REF):
     def __str__(self):
         return '%s.%s' % (self.class_, self.name_and_type)
 

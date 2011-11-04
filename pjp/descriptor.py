@@ -39,7 +39,7 @@ class MethodDescriptor(_METHOD_DESCRIPTOR):
         self.full_return = split_descriptor(self.return_)[0]
 
     def __repr__(self):
-        return "MethodDescriptor('%s')" % (self.descriptor)
+        return "MethodDescriptor('%s')" % self.descriptor
 
     def __str__(self):
         return '%s(%s)' % (self.full_return, ', '.join(self.full_arguments))

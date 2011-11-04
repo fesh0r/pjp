@@ -101,7 +101,7 @@ class ClassAccessFlags(AccessFlags):
 
 class InnerClassAccessFlags(AccessFlags):
     _allowed_flags = ['public', 'private', 'protected', 'static', 'final', 'super', 'interface', 'abstract',
-                     'synthetic', 'annotation', 'enum']
+                      'synthetic', 'annotation', 'enum']
 
 
 class FieldAccessFlags(AccessFlags):
